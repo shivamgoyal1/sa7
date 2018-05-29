@@ -1,8 +1,8 @@
 import Poll from '../models/poll';
 
 
-  // should return a promise that returns a list of polls
-	export const getPolls = () => {
+// should return a promise that returns a list of polls
+export const getPolls = () => {
   return Poll.find({});
 };
 
@@ -25,4 +25,3 @@ export const vote = (pollID, upvote) => {
     return poll.save();
   });
 };
-

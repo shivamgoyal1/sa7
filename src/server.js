@@ -39,35 +39,33 @@ app.use(bodyParser.json());
 
 // default index route
 app.get('/', (req, res) => {
-Polls.getPolls().then((polls) => {
-  res.render('index', { polls });
-}).catch((error) => {
-  res.send(`error: ${error}`);
+  Polls.getPolls().then((polls) => {
+    res.render('index', { polls });
+  }).catch((error) => {
+    res.send(`error: ${error}`);
+  });
 });
 
+app.get('/new', (req, res) => {
+  res.render('new');
 });
 
-app.get('/new',(req,res) => {
-res.render('new');
+app.post('/new', (req, res) => {
+  const newpoll = {
+    text: req.body.text,
+    imageURL: req.body.imageURL,
+  };
+  Polls.createPoll(newpoll).then((poll) => {
+    res.redirect('/');
+  });
 });
 
-app.post('/new',(req,res) => {
-const newpoll = {
-  text: req.body.text,
-  imageURL: req.body.imageURL,
-};
-Polls.createPoll(newpoll).then((poll) => {
-  res.redirect('/');
-});
-
-});
-
-app.post('/vote/:id',(req,res) => {
-const vote = (req.body.vote === 'up');// convert to bool
-Polls.vote(req.params.id, vote).then((result) => {
-  res.send(result);
-});
-
+app.post('/vote/:id', (req, res) => {
+  console.log(req.body.vote, req.params.id);
+  const vote = (req.body.vote === 'up');// convert to bool
+  Polls.vote(req.params.id, vote).then((result) => {
+    res.send(result);
+  });
 });
 
 // START THE SERVER

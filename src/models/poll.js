@@ -18,9 +18,4 @@ PollSchema.virtual('score').get(function scoreCalc() {
 // create model class
 const PollModel = mongoose.model('Poll', PollSchema);
 
-export const getPolls = () => {
-  return Poll.find({});
-};
-
 export default PollModel;
-
